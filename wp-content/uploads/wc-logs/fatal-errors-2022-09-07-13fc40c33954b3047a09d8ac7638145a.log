@@ -1,0 +1,24 @@
+2022-09-07T15:24:36+00:00 CRITICAL Uncaught Error: Call to undefined function CFVSW\Compatibility\astra_get_option() in C:\xampp\htdocs\bookattic\wp-content\plugins\variation-swatches-woo\compatibility\astra.php:83
+Stack trace:
+#0 C:\xampp\htdocs\bookattic\wp-includes\class-wp-hook.php(307): CFVSW\Compatibility\Astra->is_required_astra_page(false)
+#1 C:\xampp\htdocs\bookattic\wp-includes\plugin.php(191): WP_Hook->apply_filters(false, Array)
+#2 C:\xampp\htdocs\bookattic\wp-content\plugins\variation-swatches-woo\inc\swatches.php(730): apply_filters('cfvsw_requires_...', false)
+#3 C:\xampp\htdocs\bookattic\wp-content\plugins\variation-swatches-woo\inc\swatches.php(717): CFVSW\Inc\Swatches->requires_global_settings()
+#4 C:\xampp\htdocs\bookattic\wp-content\plugins\variation-swatches-woo\inc\swatches.php(476): CFVSW\Inc\Swatches->is_required_page()
+#5 C:\xampp\htdocs\bookattic\wp-includes\class-wp-hook.php(307): CFVSW\Inc\Swatches->enqueue_scripts('')
+#6 C:\xampp\htdocs\bookattic\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#7 C:\xampp\htdocs\bookattic\wp-includes\plugin.php(476): WP_Hook->do_action(Array)
+#8 C:\xampp\htdocs\bookattic\wp-includes\script-loader.php(2156): do_action('wp_enqueue_scri...')
+#9 C:\xampp\htdocs\bookattic\wp-includes\class-wp-customize-manager.php(454): wp_enqueue_scripts()
+#10 C:\xampp\htdocs\bookattic\wp-includes\class-wp-customize-manager.php(551): WP_Customize_Manager->wp_die(0, 'Non-existent ch...')
+#11 C:\xampp\htdocs\bookattic\wp-includes\class-wp-hook.php(307): WP_Customize_Manager->setup_theme('')
+#12 C:\xampp\htdocs\bookattic\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#13 C:\xampp\htdocs\bookattic\wp-includes\plugin.php(476): WP_Hook->do_action(Array)
+#14 C:\xampp\htdocs\bookattic\wp-settings.php(530): do_action('setup_theme')
+#15 C:\xampp\htdocs\bookattic\wp-config.php(96): require_once('C:\\xampp\\htdocs...')
+#16 C:\xampp\htdocs\bookattic\wp-load.php(50): require_once('C:\\xampp\\htdocs...')
+#17 C:\xampp\htdocs\bookattic\wp-blog-header.php(13): require_once('C:\\xampp\\htdocs...')
+#18 C:\xampp\htdocs\bookattic\index.php(17): require('C:\\xampp\\htdocs...')
+#19 {main}
+  thrown in C:\xampp\htdocs\bookattic\wp-content\plugins\variation-swatches-woo\compatibility\astra.php on line 83
+
