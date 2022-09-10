@@ -47,7 +47,7 @@ class Product_Config {
 		$this->helper    = new Helper();
 		$this->templates = new Templates();
 		add_filter( 'woocommerce_product_data_tabs', [ $this, 'swatches_tab' ] );
-		add_filter( 'woocommerce_product_data_panels', [ $this, 'swatches_panel' ] );
+		add_action( 'woocommerce_product_data_panels', [ $this, 'swatches_panel' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'product_enqueue_scripts' ] );
 		add_action( 'wp_ajax_cfvsw_save_product_swatches_data', [ $this, 'save_swatches' ] );
 		add_action( 'wp_ajax_cfvsw_update_product_swatches_data', [ $this, 'update_swatches' ] );
@@ -201,6 +201,7 @@ class Product_Config {
 			<div id="cfvsw_swatches_settings" class="panel wc-metaboxes-wrapper hidden">
 		<div class="cfvsw-swatches-settings-notice no-product">
 			<p><?php esc_html_e( 'Please save this product to enable custom settings for Variation Swatches.', 'variation-swatches-woo' ); ?></p>
+		</div>
 		</div>
 			<?php
 			return;

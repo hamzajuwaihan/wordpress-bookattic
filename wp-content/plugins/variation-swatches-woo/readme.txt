@@ -2,8 +2,8 @@
 Contributors: brainstormforce
 Tags: woocommerce variation swatches, woocommerce attributes, woocommerce variation, product attributes, product color, product size, variable product attributes, variation product swatches, color variation swatch, image variation swatch
 Requires at least: 5.4
-Tested up to: 6.0.1
-Stable tag: 1.0.3
+Tested up to: 6.0.2
+Stable tag: 1.0.4
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -106,6 +106,12 @@ Yes, this plugin enables variation swatches on shop / archieve page. User can se
 2. Multiple options for swatches available
 
 == Changelog ==
+= 1.0.4 – WEDNESDAY, 7th SEPTEMBER 2022 =
+* Improvement - Supports WooCommerce shortcodes.
+* Improvement - Astra's swap mode working on disabling swatches on shop page.
+* Improvement - Increased variation threshold to 200.
+* Fixed - Admin UI breaking on edit product page.
+* Fixed - Settings page UI issue on attribute edit.
 
 = 1.0.3 – WEDNESDAY, 24th AUGUST 2022 =
 * Feature - Disable out of stock terms.

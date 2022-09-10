@@ -69,7 +69,9 @@ class Swatches {
 		if ( class_exists( 'Cartflows_Pro_Loader' ) ) {
 			new Cartflows_Pro();
 		}
+		add_filter( 'woocommerce_ajax_variation_threshold', [ $this, 'cfvsw_ajax_variation_threshold' ], 100, 2 );
 
+		add_action( 'template_redirect', [ $this, 'shortcode_functionality' ], 10 );
 		if (
 			$this->settings[ CFVSW_GLOBAL ]['enable_swatches'] || $this->settings[ CFVSW_GLOBAL ]['enable_swatches_shop']
 		) {
@@ -85,6 +87,29 @@ class Swatches {
 		add_action( 'wp_ajax_cfvsw_ajax_add_to_cart', [ $this, 'cfvsw_ajax_add_to_cart' ] );
 		add_action( 'wp_ajax_nopriv_cfvsw_ajax_add_to_cart', [ $this, 'cfvsw_ajax_add_to_cart' ] );
 		add_filter( 'woocommerce_layered_nav_term_html', [ $this, 'filters_html' ], 10, 4 );
+	}
+
+	/**
+	 * Add variation in product shortcode functionality.
+	 *
+	 * @return void
+	 * @since 1.0.4
+	 */
+	public function shortcode_functionality() {
+		$add_filter             = false;
+		$woocommerce_shortcodes = [ 'products', 'featured_products', 'sale_products', 'best_selling_products', 'recent_products', 'product_attribute', 'top_rated_products', 'product_category' ];
+		foreach ( $woocommerce_shortcodes as $value ) {
+			if ( wc_post_content_has_shortcode( $value ) ) {
+				$add_filter = true;
+				break;
+			}
+		}
+
+		if ( $add_filter ) {
+			add_filter( 'cfvsw_requires_shop_settings', '__return_true' );
+		} elseif ( wc_post_content_has_shortcode( 'product_page' ) ) {
+			add_filter( 'cfvsw_requires_global_settings', '__return_true' );
+		}
 	}
 
 	/**
@@ -375,11 +400,20 @@ class Swatches {
 	public function catalog_show_attr_shop_page( $settings, $product_id, $attributes ) {
 		// Get global level attr.
 		$get_global_saved_attr = ! empty( $settings['special_attr_choose'] ) ? sanitize_text_field( $settings['special_attr_choose'] ) : '';
+		// Verify global attr exist or not.
+		if ( '' !== $get_global_saved_attr ) {
+			if ( ! taxonomy_is_product_attribute( $get_global_saved_attr ) ) {
+				$get_global_saved_attr = '';
+			}
+		}
+
 		// Get product level attr.
 		$get_product_saved_attr = get_post_meta( $product_id, sanitize_text_field( CFVSW_PRODUCT_ATTR . '_catalog_attr' ), true );
+
 		// Compare and show attr.
-		$show_attr_name = ! empty( $get_product_saved_attr ) ? $get_product_saved_attr : $get_global_saved_attr;
-			// Show first attr.
+		$show_attr_name = ! empty( $get_product_saved_attr ) && ! empty( $attributes[ $get_product_saved_attr ] ) ? $get_product_saved_attr : $get_global_saved_attr;
+
+		// Show first attr.
 		if ( empty( $show_attr_name ) ) {
 			$show_attr_name = array_key_first( $attributes );
 		}
@@ -866,5 +900,15 @@ class Swatches {
 			return '<a ref="nofollow" style="border-radius:' . esc_attr( $border_radius ) . '" href=' . esc_url( $link ) . '>' . $html . '</a>';
 		}
 		return $term_html;
+	}
+
+	/**
+	 * Rewrite woocommerce threshold.
+	 *
+	 * @since 1.0.4
+	 * @return int
+	 */
+	public function cfvsw_ajax_variation_threshold() {
+		return 200;
 	}
 }

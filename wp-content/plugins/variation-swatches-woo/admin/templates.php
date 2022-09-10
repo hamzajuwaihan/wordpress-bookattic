@@ -213,9 +213,10 @@ class Templates {
 	public function product_settings_wrapper( $attributes, $reset ) {
 		$get_shop_setting = $this->helper()->get_option( CFVSW_SHOP );
 		if ( ! empty( $get_shop_setting['special_attr_archive'] ) ) :
-			$meta_key_name   = CFVSW_PRODUCT_ATTR . '_catalog_attr';
-			$input_name      = "attr[$meta_key_name]";
-			$get_saved_value = ! $reset ? get_post_meta( intval( $this->product_id ), sanitize_text_field( $meta_key_name ), true ) : false;
+			$meta_key_name          = CFVSW_PRODUCT_ATTR . '_catalog_attr';
+			$input_name             = "attr[$meta_key_name]";
+			$get_saved_value        = ! $reset ? get_post_meta( intval( $this->product_id ), sanitize_text_field( $meta_key_name ), true ) : false;
+			$put_saved_value_hidden = '';
 			?>
 		<div class="cfvsw-product-settings">
 			<div class="cfvsw-settings-container cfvsw-settings-special-attr cfvsw-attribute-wrapper">
@@ -223,7 +224,6 @@ class Templates {
 				<h3><?php esc_html_e( 'Catalog Mode Attribute', 'variation-swatches-woo' ); ?></h3>
 			</div>
 			<div class="cfvsw-attribute-field">
-			<input type="hidden" name="<?php echo esc_attr( $input_name ); ?>" value="<?php echo esc_attr( $get_saved_value ); ?>" />
 				<select data-name="<?php echo esc_attr( $input_name ); ?>" class="select2 wc-enhanced-select cfvsw-attribute-type-select">
 						<option value=""><?php esc_html_e( 'Default', 'variation-swatches-woo' ); ?></option>
 						<?php
@@ -232,7 +232,11 @@ class Templates {
 								$attr_get_name = $attribute->get_name();
 								$taxonomy      = get_taxonomy( $attr_get_name );
 								$label         = $taxonomy ? $taxonomy->labels->singular_name : $attr_get_name;
-								$selected      = $get_saved_value && $attr_get_name === $get_saved_value ? 'selected' : '';
+								$selected      = '';
+								if ( $get_saved_value && $attr_get_name === $get_saved_value ) {
+									$selected               = 'selected';
+									$put_saved_value_hidden = $get_saved_value;
+								}
 								?>
 								<option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $attr_get_name ); ?>"><?php echo esc_html( $label ); ?></option>
 								<?php
@@ -240,6 +244,7 @@ class Templates {
 						}
 						?>
 					</select>
+					<input type="hidden" name="<?php echo esc_attr( $input_name ); ?>" value="<?php echo esc_attr( $put_saved_value_hidden ); ?>" />
 			</div>
 		</div>
 		</div>

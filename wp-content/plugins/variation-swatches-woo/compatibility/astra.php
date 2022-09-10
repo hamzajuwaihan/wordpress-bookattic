@@ -8,6 +8,8 @@
 
 namespace CFVSW\Compatibility;
 
+use CFVSW\Inc\Helper;
+
 /**
  * Astra Compatibility
  *
@@ -66,10 +68,9 @@ class Astra {
 	 * @since 1.0.0
 	 */
 	public function override_hover_effect_change( $style ) {
-		if ( 'swap' === $style ) {
-			$style = '';
-		}
-		return $style;
+		$helper               = new Helper();
+		$get_shop_page_option = $helper->get_option( CFVSW_GLOBAL );
+		return ! empty( $get_shop_page_option['enable_swatches_shop'] ) && 'swap' === $style ? '' : $style;
 	}
 
 	/**

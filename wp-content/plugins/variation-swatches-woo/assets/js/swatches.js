@@ -1,6 +1,9 @@
 ( function ( $ ) {
 	const removeAttrClass = cfvsw_swatches_settings.remove_attr_class;
+	const addRemoveWithCommonClass = `${ removeAttrClass } cfvsw-swatches-out-of-stock`;
 	const addRemoveDisableClass = removeAttrClass + '-disable';
+	const addRemoveDisableClassCommon = `${ addRemoveDisableClass } cfvsw-swatches-disabled`;
+
 	// Disable out of stock attr.
 	const SW = {
 		init: () => {
@@ -71,7 +74,7 @@
 				`.${ addRemoveDisableClass }`
 			);
 			if ( findToRemoveClass.length ) {
-				findToRemoveClass.removeClass( addRemoveDisableClass );
+				findToRemoveClass.removeClass( addRemoveDisableClassCommon );
 			}
 			getAllSelect.each( function () {
 				const select = $( this );
@@ -90,7 +93,9 @@
 								getFormData
 							);
 							if ( ! hasStock ) {
-								optValue.addClass( addRemoveDisableClass );
+								optValue.addClass(
+									addRemoveDisableClassCommon
+								);
 							}
 						}
 					} );
@@ -187,7 +192,14 @@
 	};
 
 	$( document ).on( 'click', '.cfvsw-swatches-option', function () {
-		onClickSwatchesOption( $( this ) );
+		const swatchesOption = $( this );
+		if (
+			swatchesOption.hasClass( 'cfvsw-swatches-disabled' ) ||
+			swatchesOption.hasClass( 'cfvsw-swatches-out-of-stock' )
+		) {
+			return;
+		}
+		onClickSwatchesOption( swatchesOption );
 	} );
 
 	$( 'body' ).on(
@@ -411,9 +423,9 @@
 							availableOptions
 						)
 					) {
-						$( this ).addClass( removeAttrClass );
+						$( this ).addClass( addRemoveWithCommonClass );
 					} else {
-						$( this ).removeClass( removeAttrClass );
+						$( this ).removeClass( addRemoveWithCommonClass );
 					}
 				} );
 		} );
@@ -446,7 +458,7 @@
 				findDisableSelect.removeClass( 'disable-to-select' );
 			}
 			if ( findDisabledAttr ) {
-				findDisabledAttr.removeClass( addRemoveDisableClass );
+				findDisabledAttr.removeClass( addRemoveDisableClassCommon );
 			}
 			setTimeout( () => {
 				SW.firstTime();

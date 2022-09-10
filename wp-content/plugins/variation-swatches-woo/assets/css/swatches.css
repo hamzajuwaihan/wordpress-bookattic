@@ -52,7 +52,7 @@
 	border: 1px solid #00000020;
 }
 
-.cfvsw-swatches-option:hover {
+.cfvsw-swatches-option:not( .cfvsw-swatches-disabled, .cfvsw-swatches-out-of-stock ):hover {
 	border: 1px solid var( --cfvsw-swatches-border-color-hover, #00000090 );
 	box-sizing: border-box;
 }
@@ -112,16 +112,7 @@
 	height: 100%;
 	background: rgba( 255, 255, 255, 0.7 );
 }
-/* For disable attr term */
-.cfvsw-swatches-blur,
-.cfvsw-swatches-blur-cross,
-.cfvsw-swatches-hide-disable,
-.cfvsw-swatches-blur-disable,
-.cfvsw-swatches-blur-cross-disable {
-	pointer-events: none;
-}
 /* Swatches tooltip css */
-
 .cfvsw-tooltip {
 	position: absolute;
 	min-width: 10px;
